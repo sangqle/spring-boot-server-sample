@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.security.RolesAllowed;
 import java.security.Principal;
+import java.util.List;
 
 /**
  * RolesAllowed is base role for the rest controller
@@ -17,7 +18,7 @@ import java.security.Principal;
 @RequestMapping("/api/test")
 public class TestController {
 
-    @RolesAllowed("USER")
+    @RolesAllowed({"ADMIN", "USER", "MOD"})
     @GetMapping("/all")
     public String allAccess() {
         return "All content here";
@@ -36,7 +37,7 @@ public class TestController {
 	}
 
 	@GetMapping("/admin")
-	@RolesAllowed("ADMIN")
+	@RolesAllowed("SUPER")
 	public String adminaccess() {
 		return "admin board.";
 	}

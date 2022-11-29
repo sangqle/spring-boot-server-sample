@@ -2,6 +2,7 @@ package com.example.springboot.configuration.filter;
 
 import com.example.springboot.configuration.JwtTokenUtil;
 import com.example.springboot.service.UserDetailsImpl;
+import com.example.springboot.service.UserDetailsServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,9 @@ public class JwtTokenFilter extends OncePerRequestFilter {
     @Autowired
     JwtTokenUtil jwtTokenUtil;
 
+    @Autowired
+    UserDetailsServiceImpl userDetailsService;
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
         // Get authorization header and validate
@@ -61,15 +65,13 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         }
 
         // Set sample authentication object and hardcode for authorities
-        UserDetailsImpl userDetails = new UserDetailsImpl();
-        List<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
-        authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+        UserDetailsImpl userDetails = (UserDetailsImpl) userDetailsService.loadUserByUsername(username);
 
+        System.err.println(userDetails.getAuthorities());
 
         UsernamePasswordAuthenticationToken
                 authentication = new UsernamePasswordAuthenticationToken(
-                null , userDetails, authorities
+                null , userDetails, userDetails.getAuthorities()
         );
 
         authentication.setDetails(

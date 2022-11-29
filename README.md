@@ -69,6 +69,38 @@ Headers:
 }
 ```
 
+### Sample authorization
+
+<code>TestController.java</code>
+```java
+public class TestController {
+
+    @RolesAllowed({"ADMIN", "USER", "MOD"})
+    @GetMapping("/all")
+    public String allAccess() {
+        return "All content here";
+    }
+
+    @GetMapping("/user")
+    @RolesAllowed("USER")
+    public String userAccess(Authentication authentication, Principal principal) {
+        return "User Content.";
+    }
+
+    @GetMapping("/mod")
+	@RolesAllowed("MOD")
+	public String moderatorAccess() {
+		return "Moderator Board.";
+	}
+
+	@GetMapping("/admin")
+	@RolesAllowed("SUPER")
+	public String adminaccess() {
+		return "admin board.";
+	}
+}
+```
+
 # Project Structure
 
 ## 1. Authentication & Authorization via RestAPI
