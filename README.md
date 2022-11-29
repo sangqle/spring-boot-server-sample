@@ -3,6 +3,72 @@ SpringBootServerSample is the sample server preresentation sample structure of p
 
 Easy to use, and you just need to customize a few things to adapt to your business
 
+# How to run project on your local
+
+```bash
+git clone https://github.com/sangqle/spring-boot-server-sample.git
+
+cd spring-boot-server-sample
+
+mvn clean install
+```
+
+## For VSCode
+### One of the following ways:
+
+- In main class at <code>SpringBootServerApplication.java</code> then <strong>right-click and select 'Run Java'</strong>
+- Run with command line:
+  ```bash
+  mvn spring-boot:run
+  ```
+## For IDE
+...
+
+# Testing Application
+
+Sample credentials that hardcode in the project you will use it to login in your application
+```json
+{
+    "username": "admin",
+    "password": "adminpass"
+}
+```
+
+## Sample API
+### Login
+POST: http://localhost:8080/api/auth/login
+
+Body:
+```json
+{
+    "username": "admin",
+    "password": "adminpass"
+}
+```
+
+Sample response:
+```json
+{
+    "msg": "Successful",
+    "data": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY2OTY5NTIyNiwiZXhwIjoxNjcwMzAwMDI2fQ.lkJlMJu8M7HuYGkI0kyMGeAc7wMCQgLy0fh7yggCy2YXR8s5Xj0A580jRdB-WEGwQY_ZagDFyvqgyYK1Q74shw",
+    "err": 0
+}
+```
+
+
+### Testing sample controller
+
+GET: http://localhost:8080/api/test/all
+
+Headers:
+```json
+{
+    ...
+    "Authorization": "Bearer <Token from login>"
+    ...
+}
+```
+
 # Project Structure
 
 ## 1. Authentication & Authorization via RestAPI

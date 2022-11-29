@@ -15,12 +15,12 @@ import java.security.Principal;
 
 @RestController
 @RequestMapping("/api/test")
-@RolesAllowed("ADMIN")
 public class TestController {
 
+    @RolesAllowed("USER")
     @GetMapping("/all")
     public String allAccess() {
-        return "Public Content.";
+        return "All content here";
     }
 
     @GetMapping("/user")
