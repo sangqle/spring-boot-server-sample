@@ -1,5 +1,4 @@
 # SpringBootServerSample
-SpringBootServerSample is the sample server preresentation sample structure of project include Logging, Authentication, Configure datasource
 
 Easy to use, and you just need to customize a few things to adapt to your business
 
