@@ -18,6 +18,19 @@ mvn clean install
 
 - In main class at <code>SpringBootServerApplication.java</code> then <strong>right-click and select 'Run Java'</strong>
 - Run with command line:
+
+The most important thing in the pom.xml must have this plugin, but some project it maybe missing so you can add this plugin to run maven project in commnand line:
+```xml
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+```
+
   ```bash
   mvn spring-boot:run
   ```
@@ -71,10 +84,14 @@ Headers:
 
 ### Sample authorization
 
+This is just sample code so in project maybe it's not the same, but conceptually it's the same
+
 <code>TestController.java</code>
+
 ```java
 public class TestController {
 
+    // as you see, if the authenticate have any of these role below it can be access this api
     @RolesAllowed({"ADMIN", "USER", "MOD"})
     @GetMapping("/all")
     public String allAccess() {
@@ -114,6 +131,7 @@ by adding the following dependency to our pom.xml
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-security</artifactId>
+      <version>2.7.3</version>
     </dependency>
   </dependencies>
 
@@ -210,8 +228,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         // Get user from your database we will hardcode for test
-        if(username.equals("admin")) {
-            return new UserDetailsImpl(1, "admin","admin@gmail.com", "adminpass", null);
+         if(username.equals("admin")) {
+            // Hardcode for sample granted authority in production must be fetch from db
+            List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+            authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+
+            return new UserDetailsImpl(1, "admin","admin@gmail.com", "adminpass", authorities);
         }
         return null;
     }
