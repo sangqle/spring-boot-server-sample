@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletResponse;
  * 2. Configure web security (public URLs, private URLs, authorization, etc.)
  */
 
-@EnableWebSecurity(debug = true)
+@EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, jsr250Enabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -65,7 +65,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // Our public endpoint
                 .antMatchers("/api/auth/**").permitAll()
                 .antMatchers("/api/public/**").permitAll()
-                .antMatchers("/api/test/**").permitAll()
 
                 // Our private endpoint
                 .anyRequest().authenticated();
