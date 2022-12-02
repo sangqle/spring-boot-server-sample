@@ -3,7 +3,6 @@ package com.example.springboot.configuration;
 import com.example.springboot.configuration.filter.JwtTokenFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -24,7 +23,8 @@ import javax.servlet.http.HttpServletResponse;
  * 1. Configure the authentication manager with the correct provider
  * 2. Configure web security (public URLs, private URLs, authorization, etc.)
  */
-@EnableWebSecurity
+
+@EnableWebSecurity(debug = true)
 @EnableGlobalMethodSecurity(prePostEnabled = true, jsr250Enabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -60,15 +60,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 )
                 .and();
 
-        // Set permission on endpoint
+        // // Set permission on endpoint
         http.authorizeRequests()
                 // Our public endpoint
                 .antMatchers("/api/auth/**").permitAll()
                 .antMatchers("/api/public/**").permitAll()
-                .antMatchers(HttpMethod.GET, "/api/author/**").permitAll()
-                .antMatchers(HttpMethod.POST, "/api/author/search").permitAll()
-                .antMatchers(HttpMethod.GET, "/api/book/**").permitAll()
-                .antMatchers(HttpMethod.POST, "/api/book/search").permitAll()
+                .antMatchers("/api/test/**").permitAll()
+
                 // Our private endpoint
                 .anyRequest().authenticated();
 
