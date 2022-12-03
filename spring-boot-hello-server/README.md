@@ -8,8 +8,7 @@ Easy to use, and you just need to customize a few things to adapt to your busine
 ```bash
 git clone https://github.com/sangqle/spring-boot-server-sample.git
 
-cd spring-boot-server-sample
-git checkout 0.Init-sample-server
+cd spring-boot-server-sample/spring-boot-hello-server
 
 mvn clean install
 ```
