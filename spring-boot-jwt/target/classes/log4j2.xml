@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="warn">
+    <Properties>
+        <Property name="basePath">/data/logs</Property>
+        <Property name="projectName">SpringBootServerSample</Property>
+        <Property name="strLogFormat">[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] [%c{1}:%L] - %msg%n</Property>
+        <Property name="maxRollingFileSize">10Mb</Property>
+        <Property name="maxRollingFileAge">30d</Property>
+        <Property name="maxDepth">10</Property>
+    </Properties>
+
+    <Appenders>
+        <!-- Console log-->
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </Console>
+        <!-- Error logger -->
+        <RollingFile name="errorLog" fileName="${basePath}/${projectName}_error.log"
+                     filePattern="${basePath}/${projectName}-%d{yyyyMMdd}_error.%i.log">
+            <!-- Matches only INFO level -->
+            <LevelRangeFilter minLevel="ERROR" maxLevel="ERROR" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout>
+                <pattern>${strLogFormat}</pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="${maxRollingFileSize}"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10">
+                <Delete basePath="${basePathr}" maxDepth="${maxDepth}">
+                    <IfLastModified age="${maxRollingFileAge}"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+
+        <!-- Info logger -->
+        <RollingFile name="infoLog" fileName="${basePath}/${projectName}_info.log"
+                     filePattern="${basePath}/${projectName}-%d{yyyyMMdd}_info.%i.log">
+            <!-- Matches only INFO level -->
+            <LevelRangeFilter minLevel="INFO" maxLevel="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout>
+                <pattern>${strLogFormat}</pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="${maxRollingFileSize}"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10">
+                <Delete basePath="${basePathr}" maxDepth="${maxDepth}">
+                    <IfLastModified age="${maxRollingFileAge}"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+
+        <!-- Debug logger -->
+        <RollingFile name="debugLog" fileName="${basePath}/${projectName}_debug.log"
+                     filePattern="${basePath}/${projectName}-%d{yyyyMMdd}_debug.%i.log">
+            <!-- Matches only INFO level -->
+            <LevelRangeFilter minLevel="DEBUG" maxLevel="DEBUG" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout>
+                <pattern>${strLogFormat}</pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="${maxRollingFileSize}"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10">
+                <Delete basePath="${basePathr}" maxDepth="${maxDepth}">
+                    <IfLastModified age="${maxRollingFileAge}"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+
+        <!-- Warning logger -->
+        <RollingFile name="warnLog" fileName="${basePath}/${projectName}_warn.log"
+                     filePattern="${basePath}/${projectName}-%d{yyyyMMdd}_warn.%i.log">
+            <!-- Matches only INFO level -->
+            <LevelRangeFilter minLevel="WARN" maxLevel="DEBUG" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout>
+                <pattern>${strLogFormat}</pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="${maxRollingFileSize}"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10">
+                <Delete basePath="${basePathr}" maxDepth="${maxDepth}">
+                    <IfLastModified age="${maxRollingFileAge}"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+    </Appenders>
+    <Loggers>
+        <Logger name="com.example.springboot" additivity="false" level="ALL">
+            <AppenderRef ref="infoLog"/>
+            <AppenderRef ref="errorLog"/>
+            <AppenderRef ref="debugLog"/>
+            <AppenderRef ref="warnLog"/>
+            <AppenderRef ref="Console"/>
+        </Logger>
+        <Root level="ALL">
+        </Root>
+    </Loggers>
+</Configuration>

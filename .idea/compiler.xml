@@ -6,13 +6,22 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="SpringBootServerSample" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="spring-boot-authorization" target="1.8" />
+      <module name="spring-boot-hello-server" target="1.8" />
+      <module name="spring-boot-server-sample" target="1.8" />
+      <module name="SpringBootServerSample" target="1.8" />
+      <module name="SpringBootServerSample (1)" target="1.8" />
+      <module name="SpringBootServerSample (2)" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="SpringBootServerSample" options="-parameters" />
+      <module name="SpringBootServerSample (2)" options="-parameters" />
+      <module name="spring-boot-hello-server" options="-parameters" />
     </option>
   </component>
 </project>
