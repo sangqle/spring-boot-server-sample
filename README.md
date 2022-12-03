@@ -16,7 +16,7 @@ The title of demo below is the same as the branch name, so you can checkout with
 ### [O] [spring-boot-datasources]()
 &nbsp;
 ## Advanced 
-
+### [O] [spring-boot-microservices]()
 ### [O] [spring-boot-authorization-custom]()
 ### [O] [spring-boot-datasource]()
 ### [O] [spring-boot-docker]()
