@@ -24,7 +24,7 @@ MANIFEST.MF
 _site/
 activemq-data
 bin
-build
+**/build/*
 !/**/src/**/bin
 !/**/src/**/build
 build.log
@@ -35,7 +35,7 @@ lib/
 manifest.yml
 out
 overridedb.*
-target
+**/target/*
 .flattened-pom.xml
 secrets.yml
 .gradletasknamecache
