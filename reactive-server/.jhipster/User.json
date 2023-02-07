@@ -1,0 +1,31 @@
+{
+  "changelogDate": "20230207102534",
+  "clientRootFolder": "reactiveserver",
+  "databaseType": "cassandra",
+  "dto": "mapstruct",
+  "entityTableName": "jhi_user",
+  "fields": [
+    {
+      "fieldName": "email",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "phoneNumber",
+      "fieldType": "String",
+      "fieldValidateRules": ["unique", "maxlength"],
+      "fieldValidateRulesMaxlength": "20"
+    },
+    {
+      "fieldName": "userId",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "microserviceName": "reactiveserver",
+  "name": "User",
+  "pagination": "no",
+  "readOnly": true,
+  "relationships": [],
+  "service": "serviceImpl"
+}
