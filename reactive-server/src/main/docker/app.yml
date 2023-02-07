@@ -1,0 +1,59 @@
+# This configuration is intended for development purpose, it's **your** responsibility to harden it for production
+version: '3.8'
+services:
+  reactiveserver-app:
+    image: reactiveserver
+    environment:
+      - _JAVA_OPTIONS=-Xmx512m -Xms256m
+      - SPRING_PROFILES_ACTIVE=prod,api-docs
+      - MANAGEMENT_METRICS_EXPORT_PROMETHEUS_ENABLED=true
+      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://admin:$${jhipster.registry.password}@jhipster-registry:8761/eureka
+      - SPRING_CLOUD_CONFIG_URI=http://admin:$${jhipster.registry.password}@jhipster-registry:8761/config
+      - SPRING_DATA_CASSANDRA_CONTACTPOINTS=reactiveserver-cassandra
+      - JHIPSTER_SLEEP=30 # gives time for other services to boot before the application
+  reactiveserver-cassandra:
+    image: cassandra:3.11.13
+    # volumes:
+    #   - ~/volumes/jhipster/reactiveserver/cassandra/:/var/lib/cassandra/data
+    # If you want to expose these ports outside your dev PC,
+    # remove the "127.0.0.1:" prefix
+    ports:
+      - 127.0.0.1:7000:7000
+      - 127.0.0.1:7001:7001
+      - 127.0.0.1:7199:7199
+      - 127.0.0.1:9042:9042
+      - 127.0.0.1:9160:9160
+  reactiveserver-cassandra-migration:
+    environment:
+      - CASSANDRA_CONTACT_POINT=reactiveserver-cassandra
+      - USER=docker-cassandra-migration
+      # - DEBUG_LOG=1 # uncomment to show debug logs during the migration process
+      - CREATE_KEYSPACE_SCRIPT=create-keyspace-prod.cql
+    build:
+      context: .
+      dockerfile: cassandra/Cassandra-Migration.Dockerfile
+    volumes:
+      - ../resources/config/cql:/cql:ro
+  jhipster-registry:
+    image: jhipster/jhipster-registry:v7.3.0
+    volumes:
+      - ./central-server-config:/central-config
+    # When run with the "dev" Spring profile, the JHipster Registry will
+    # read the config from the local filesystem (central-server-config directory)
+    # When run with the "prod" Spring profile, it will read the configuration from a Git repository
+    # See https://www.jhipster.tech/jhipster-registry/#spring-cloud-config
+    environment:
+      - JHIPSTER_SLEEP=20
+      - _JAVA_OPTIONS=-Xmx512m -Xms256m
+      - SPRING_PROFILES_ACTIVE=dev,api-docs
+      - SPRING_SECURITY_USER_PASSWORD=admin
+      - JHIPSTER_REGISTRY_PASSWORD=admin
+      - SPRING_CLOUD_CONFIG_SERVER_COMPOSITE_0_TYPE=native
+      - SPRING_CLOUD_CONFIG_SERVER_COMPOSITE_0_SEARCH_LOCATIONS=file:./central-config/docker-config/
+      # - SPRING_CLOUD_CONFIG_SERVER_COMPOSITE_0_TYPE=git
+      # - SPRING_CLOUD_CONFIG_SERVER_COMPOSITE_0_URI=https://github.com/jhipster/jhipster-registry/
+      # - SPRING_CLOUD_CONFIG_SERVER_COMPOSITE_0_SEARCH_PATHS=central-config
+    # If you want to expose these ports outside your dev PC,
+    # remove the "127.0.0.1:" prefix
+    ports:
+      - 127.0.0.1:8761:8761
