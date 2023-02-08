@@ -1,0 +1,9 @@
+entity JSubscription {
+    userId Long,
+	startDate Instant,
+	endDate Instant,
+}
+
+service * with serviceClass
+paginate * with pagination
+dto * with mapstruct
