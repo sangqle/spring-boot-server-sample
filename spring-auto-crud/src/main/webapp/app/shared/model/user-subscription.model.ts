@@ -5,6 +5,7 @@ export interface IUserSubscription {
   userId?: number | null;
   startDate?: string | null;
   endDate?: string | null;
+  pricingId?: number | null;
 }
 
 export const defaultValue: Readonly<IUserSubscription> = {};

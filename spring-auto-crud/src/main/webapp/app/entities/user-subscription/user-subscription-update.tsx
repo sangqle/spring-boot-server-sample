@@ -8,10 +8,10 @@ import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateT
 import { mapIdList } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
-import { IJSubscription } from 'app/shared/model/j-subscription.model';
-import { getEntity, updateEntity, createEntity, reset } from './j-subscription.reducer';
+import { IUserSubscription } from 'app/shared/model/user-subscription.model';
+import { getEntity, updateEntity, createEntity, reset } from './user-subscription.reducer';
 
-export const JSubscriptionUpdate = () => {
+export const UserSubscriptionUpdate = () => {
   const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
@@ -19,13 +19,13 @@ export const JSubscriptionUpdate = () => {
   const { id } = useParams<'id'>();
   const isNew = id === undefined;
 
-  const jSubscriptionEntity = useAppSelector(state => state.userSubscription.entity);
+  const userSubscriptionEntity = useAppSelector(state => state.userSubscription.entity);
   const loading = useAppSelector(state => state.userSubscription.loading);
   const updating = useAppSelector(state => state.userSubscription.updating);
   const updateSuccess = useAppSelector(state => state.userSubscription.updateSuccess);
 
   const handleClose = () => {
-    navigate('/j-subscription' + location.search);
+    navigate('/user-subscription' + location.search);
   };
 
   useEffect(() => {
@@ -47,7 +47,7 @@ export const JSubscriptionUpdate = () => {
     values.endDate = convertDateTimeToServer(values.endDate);
 
     const entity = {
-      ...jSubscriptionEntity,
+      ...userSubscriptionEntity,
       ...values,
     };
 
@@ -65,17 +65,17 @@ export const JSubscriptionUpdate = () => {
           endDate: displayDefaultDateTime(),
         }
       : {
-          ...jSubscriptionEntity,
-          startDate: convertDateTimeFromServer(jSubscriptionEntity.startDate),
-          endDate: convertDateTimeFromServer(jSubscriptionEntity.endDate),
+          ...userSubscriptionEntity,
+          startDate: convertDateTimeFromServer(userSubscriptionEntity.startDate),
+          endDate: convertDateTimeFromServer(userSubscriptionEntity.endDate),
         };
 
   return (
     <div>
       <Row className="justify-content-center">
         <Col md="8">
-          <h2 id="springAutoCrudApp.userSubscription.home.createOrEditLabel" data-cy="JSubscriptionCreateUpdateHeading">
-            Create or edit a J Subscription
+          <h2 id="springAutoCrudApp.userSubscription.home.createOrEditLabel" data-cy="UserSubscriptionCreateUpdateHeading">
+            Create or edit a User Subscription
           </h2>
         </Col>
       </Row>
@@ -86,12 +86,12 @@ export const JSubscriptionUpdate = () => {
           ) : (
             <ValidatedForm defaultValues={defaultValues()} onSubmit={saveEntity}>
               {!isNew ? (
-                <ValidatedField name="id" required readOnly id="j-subscription-id" label="ID" validate={{ required: true }} />
+                <ValidatedField name="id" required readOnly id="user-subscription-id" label="ID" validate={{ required: true }} />
               ) : null}
-              <ValidatedField label="User Id" id="j-subscription-userId" name="userId" data-cy="userId" type="text" />
+              <ValidatedField label="User Id" id="user-subscription-userId" name="userId" data-cy="userId" type="text" />
               <ValidatedField
                 label="Start Date"
-                id="j-subscription-startDate"
+                id="user-subscription-startDate"
                 name="startDate"
                 data-cy="startDate"
                 type="datetime-local"
@@ -99,13 +99,14 @@ export const JSubscriptionUpdate = () => {
               />
               <ValidatedField
                 label="End Date"
-                id="j-subscription-endDate"
+                id="user-subscription-endDate"
                 name="endDate"
                 data-cy="endDate"
                 type="datetime-local"
                 placeholder="YYYY-MM-DD HH:mm"
               />
-              <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/j-subscription" replace color="info">
+              <ValidatedField label="Pricing Id" id="user-subscription-pricingId" name="pricingId" data-cy="pricingId" type="text" />
+              <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/user-subscription" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;
                 <span className="d-none d-md-inline">Back</span>
@@ -123,4 +124,4 @@ export const JSubscriptionUpdate = () => {
   );
 };
 
-export default JSubscriptionUpdate;
+export default UserSubscriptionUpdate;

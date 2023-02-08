@@ -1,13 +1,11 @@
 package com.sangle.crud.service.dto;
 
-import com.sangle.crud.domain.UserSubscription;
-
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
 
 /**
- * A DTO for the {@link UserSubscription} entity.
+ * A DTO for the {@link com.sangle.crud.domain.UserSubscription} entity.
  */
 @SuppressWarnings("common-java:DuplicatedBlocks")
 public class UserSubscriptionDTO implements Serializable {
@@ -19,6 +17,8 @@ public class UserSubscriptionDTO implements Serializable {
     private Instant startDate;
 
     private Instant endDate;
+
+    private Long pricingId;
 
     public Long getId() {
         return id;
@@ -52,6 +52,14 @@ public class UserSubscriptionDTO implements Serializable {
         this.endDate = endDate;
     }
 
+    public Long getPricingId() {
+        return pricingId;
+    }
+
+    public void setPricingId(Long pricingId) {
+        this.pricingId = pricingId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -76,11 +84,12 @@ public class UserSubscriptionDTO implements Serializable {
     // prettier-ignore
     @Override
     public String toString() {
-        return "JSubscriptionDTO{" +
+        return "UserSubscriptionDTO{" +
             "id=" + getId() +
             ", userId=" + getUserId() +
             ", startDate='" + getStartDate() + "'" +
             ", endDate='" + getEndDate() + "'" +
+            ", pricingId=" + getPricingId() +
             "}";
     }
 }

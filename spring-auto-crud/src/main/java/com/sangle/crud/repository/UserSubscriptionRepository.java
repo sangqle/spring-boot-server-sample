@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 
 /**
- * Spring Data JPA repository for the JSubscription entity.
+ * Spring Data JPA repository for the UserSubscription entity.
  */
 @SuppressWarnings("unused")
 @Repository

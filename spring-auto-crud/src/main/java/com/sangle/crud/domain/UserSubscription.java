@@ -5,10 +5,10 @@ import java.time.Instant;
 import javax.persistence.*;
 
 /**
- * A JSubscription.
+ * A UserSubscription.
  */
 @Entity
-@Table(name = "j_subscription")
+@Table(name = "user_subscription")
 @SuppressWarnings("common-java:DuplicatedBlocks")
 public class UserSubscription implements Serializable {
 
@@ -27,6 +27,9 @@ public class UserSubscription implements Serializable {
 
     @Column(name = "end_date")
     private Instant endDate;
+
+    @Column(name = "pricing_id")
+    private Long pricingId;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -82,6 +85,19 @@ public class UserSubscription implements Serializable {
         this.endDate = endDate;
     }
 
+    public Long getPricingId() {
+        return this.pricingId;
+    }
+
+    public UserSubscription pricingId(Long pricingId) {
+        this.setPricingId(pricingId);
+        return this;
+    }
+
+    public void setPricingId(Long pricingId) {
+        this.pricingId = pricingId;
+    }
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
@@ -104,11 +120,12 @@ public class UserSubscription implements Serializable {
     // prettier-ignore
     @Override
     public String toString() {
-        return "JSubscription{" +
+        return "UserSubscription{" +
             "id=" + getId() +
             ", userId=" + getUserId() +
             ", startDate='" + getStartDate() + "'" +
             ", endDate='" + getEndDate() + "'" +
+            ", pricingId=" + getPricingId() +
             "}";
     }
 }

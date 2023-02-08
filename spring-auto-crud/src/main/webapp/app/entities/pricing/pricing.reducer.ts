@@ -3,9 +3,9 @@ import { createAsyncThunk, isFulfilled, isPending, isRejected } from '@reduxjs/t
 
 import { cleanEntity } from 'app/shared/util/entity-utils';
 import { IQueryParams, createEntitySlice, EntityState, serializeAxiosError } from 'app/shared/reducers/reducer.utils';
-import { IJSubscription, defaultValue } from 'app/shared/model/j-subscription.model';
+import { IPricing, defaultValue } from 'app/shared/model/pricing.model';
 
-const initialState: EntityState<IJSubscription> = {
+const initialState: EntityState<IPricing> = {
   loading: false,
   errorMessage: null,
   entities: [],
@@ -15,28 +15,28 @@ const initialState: EntityState<IJSubscription> = {
   updateSuccess: false,
 };
 
-const apiUrl = 'api/j-subscriptions';
+const apiUrl = 'api/pricings';
 
 // Actions
 
-export const getEntities = createAsyncThunk('userSubscription/fetch_entity_list', async ({ page, size, sort }: IQueryParams) => {
+export const getEntities = createAsyncThunk('pricing/fetch_entity_list', async ({ page, size, sort }: IQueryParams) => {
   const requestUrl = `${apiUrl}${sort ? `?page=${page}&size=${size}&sort=${sort}&` : '?'}cacheBuster=${new Date().getTime()}`;
-  return axios.get<IJSubscription[]>(requestUrl);
+  return axios.get<IPricing[]>(requestUrl);
 });
 
 export const getEntity = createAsyncThunk(
-  'userSubscription/fetch_entity',
+  'pricing/fetch_entity',
   async (id: string | number) => {
     const requestUrl = `${apiUrl}/${id}`;
-    return axios.get<IJSubscription>(requestUrl);
+    return axios.get<IPricing>(requestUrl);
   },
   { serializeError: serializeAxiosError }
 );
 
 export const createEntity = createAsyncThunk(
-  'userSubscription/create_entity',
-  async (entity: IJSubscription, thunkAPI) => {
-    const result = await axios.post<IJSubscription>(apiUrl, cleanEntity(entity));
+  'pricing/create_entity',
+  async (entity: IPricing, thunkAPI) => {
+    const result = await axios.post<IPricing>(apiUrl, cleanEntity(entity));
     thunkAPI.dispatch(getEntities({}));
     return result;
   },
@@ -44,9 +44,9 @@ export const createEntity = createAsyncThunk(
 );
 
 export const updateEntity = createAsyncThunk(
-  'userSubscription/update_entity',
-  async (entity: IJSubscription, thunkAPI) => {
-    const result = await axios.put<IJSubscription>(`${apiUrl}/${entity.id}`, cleanEntity(entity));
+  'pricing/update_entity',
+  async (entity: IPricing, thunkAPI) => {
+    const result = await axios.put<IPricing>(`${apiUrl}/${entity.id}`, cleanEntity(entity));
     thunkAPI.dispatch(getEntities({}));
     return result;
   },
@@ -54,9 +54,9 @@ export const updateEntity = createAsyncThunk(
 );
 
 export const partialUpdateEntity = createAsyncThunk(
-  'userSubscription/partial_update_entity',
-  async (entity: IJSubscription, thunkAPI) => {
-    const result = await axios.patch<IJSubscription>(`${apiUrl}/${entity.id}`, cleanEntity(entity));
+  'pricing/partial_update_entity',
+  async (entity: IPricing, thunkAPI) => {
+    const result = await axios.patch<IPricing>(`${apiUrl}/${entity.id}`, cleanEntity(entity));
     thunkAPI.dispatch(getEntities({}));
     return result;
   },
@@ -64,10 +64,10 @@ export const partialUpdateEntity = createAsyncThunk(
 );
 
 export const deleteEntity = createAsyncThunk(
-  'userSubscription/delete_entity',
+  'pricing/delete_entity',
   async (id: string | number, thunkAPI) => {
     const requestUrl = `${apiUrl}/${id}`;
-    const result = await axios.delete<IJSubscription>(requestUrl);
+    const result = await axios.delete<IPricing>(requestUrl);
     thunkAPI.dispatch(getEntities({}));
     return result;
   },
@@ -76,8 +76,8 @@ export const deleteEntity = createAsyncThunk(
 
 // slice
 
-export const JSubscriptionSlice = createEntitySlice({
-  name: 'userSubscription',
+export const PricingSlice = createEntitySlice({
+  name: 'pricing',
   initialState,
   extraReducers(builder) {
     builder
@@ -119,7 +119,7 @@ export const JSubscriptionSlice = createEntitySlice({
   },
 });
 
-export const { reset } = JSubscriptionSlice.actions;
+export const { reset } = PricingSlice.actions;
 
 // Reducer
-export default JSubscriptionSlice.reducer;
+export default PricingSlice.reducer;

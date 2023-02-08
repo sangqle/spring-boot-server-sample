@@ -1,9 +1,9 @@
 {
   "applications": "*",
-  "changelogDate": "20230208140702",
+  "changelogDate": "20230208155307",
   "dto": "mapstruct",
   "embedded": false,
-  "entityTableName": "j_subscription",
+  "entityTableName": "user_subscription",
   "fields": [
     {
       "fieldName": "userId",
@@ -16,11 +16,15 @@
     {
       "fieldName": "endDate",
       "fieldType": "Instant"
+    },
+    {
+      "fieldName": "pricingId",
+      "fieldType": "Long"
     }
   ],
   "fluentMethods": true,
   "jpaMetamodelFiltering": false,
-  "name": "JSubscription",
+  "name": "UserSubscription",
   "pagination": "pagination",
   "readOnly": false,
   "relationships": [],

@@ -5,9 +5,9 @@ import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { useAppDispatch, useAppSelector } from 'app/config/store';
-import { getEntity, deleteEntity } from './j-subscription.reducer';
+import { getEntity, deleteEntity } from './pricing.reducer';
 
-export const JSubscriptionDeleteDialog = () => {
+export const PricingDeleteDialog = () => {
   const dispatch = useAppDispatch();
 
   const location = useLocation();
@@ -21,11 +21,11 @@ export const JSubscriptionDeleteDialog = () => {
     setLoadModal(true);
   }, []);
 
-  const jSubscriptionEntity = useAppSelector(state => state.userSubscription.entity);
-  const updateSuccess = useAppSelector(state => state.userSubscription.updateSuccess);
+  const pricingEntity = useAppSelector(state => state.pricing.entity);
+  const updateSuccess = useAppSelector(state => state.pricing.updateSuccess);
 
   const handleClose = () => {
-    navigate('/j-subscription' + location.search);
+    navigate('/pricing' + location.search);
   };
 
   useEffect(() => {
@@ -36,23 +36,21 @@ export const JSubscriptionDeleteDialog = () => {
   }, [updateSuccess]);
 
   const confirmDelete = () => {
-    dispatch(deleteEntity(jSubscriptionEntity.id));
+    dispatch(deleteEntity(pricingEntity.id));
   };
 
   return (
     <Modal isOpen toggle={handleClose}>
-      <ModalHeader toggle={handleClose} data-cy="jSubscriptionDeleteDialogHeading">
+      <ModalHeader toggle={handleClose} data-cy="pricingDeleteDialogHeading">
         Confirm delete operation
       </ModalHeader>
-      <ModalBody id="springAutoCrudApp.userSubscription.delete.question">
-        Are you sure you want to delete J Subscription {jSubscriptionEntity.id}?
-      </ModalBody>
+      <ModalBody id="springAutoCrudApp.pricing.delete.question">Are you sure you want to delete Pricing {pricingEntity.id}?</ModalBody>
       <ModalFooter>
         <Button color="secondary" onClick={handleClose}>
           <FontAwesomeIcon icon="ban" />
           &nbsp; Cancel
         </Button>
-        <Button id="jhi-confirm-delete-userSubscription" data-cy="entityConfirmDeleteButton" color="danger" onClick={confirmDelete}>
+        <Button id="jhi-confirm-delete-pricing" data-cy="entityConfirmDeleteButton" color="danger" onClick={confirmDelete}>
           <FontAwesomeIcon icon="trash" />
           &nbsp; Delete
         </Button>
@@ -61,4 +59,4 @@ export const JSubscriptionDeleteDialog = () => {
   );
 };
 
-export default JSubscriptionDeleteDialog;
+export default PricingDeleteDialog;

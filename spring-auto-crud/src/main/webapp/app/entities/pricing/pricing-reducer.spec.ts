@@ -4,17 +4,9 @@ import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import sinon from 'sinon';
 
-import reducer, {
-  createEntity,
-  deleteEntity,
-  getEntities,
-  getEntity,
-  updateEntity,
-  partialUpdateEntity,
-  reset,
-} from './j-subscription.reducer';
+import reducer, { createEntity, deleteEntity, getEntities, getEntity, updateEntity, partialUpdateEntity, reset } from './pricing.reducer';
 import { EntityState } from 'app/shared/reducers/reducer.utils';
-import { IJSubscription, defaultValue } from 'app/shared/model/j-subscription.model';
+import { IPricing, defaultValue } from 'app/shared/model/pricing.model';
 
 describe('Entities reducer tests', () => {
   function isEmpty(element): boolean {
@@ -25,7 +17,7 @@ describe('Entities reducer tests', () => {
     }
   }
 
-  const initialState: EntityState<IJSubscription> = {
+  const initialState: EntityState<IPricing> = {
     loading: false,
     errorMessage: null,
     entities: [],
@@ -188,7 +180,7 @@ describe('Entities reducer tests', () => {
       axios.delete = sinon.stub().returns(Promise.resolve(resolvedObject));
     });
 
-    it('dispatches FETCH_JSUBSCRIPTION_LIST actions', async () => {
+    it('dispatches FETCH_PRICING_LIST actions', async () => {
       const expectedActions = [
         {
           type: getEntities.pending.type,
@@ -203,7 +195,7 @@ describe('Entities reducer tests', () => {
       expect(store.getActions()[1]).toMatchObject(expectedActions[1]);
     });
 
-    it('dispatches FETCH_JSUBSCRIPTION actions', async () => {
+    it('dispatches FETCH_PRICING actions', async () => {
       const expectedActions = [
         {
           type: getEntity.pending.type,
@@ -218,7 +210,7 @@ describe('Entities reducer tests', () => {
       expect(store.getActions()[1]).toMatchObject(expectedActions[1]);
     });
 
-    it('dispatches CREATE_JSUBSCRIPTION actions', async () => {
+    it('dispatches CREATE_PRICING actions', async () => {
       const expectedActions = [
         {
           type: createEntity.pending.type,
@@ -237,7 +229,7 @@ describe('Entities reducer tests', () => {
       expect(store.getActions()[2]).toMatchObject(expectedActions[2]);
     });
 
-    it('dispatches UPDATE_JSUBSCRIPTION actions', async () => {
+    it('dispatches UPDATE_PRICING actions', async () => {
       const expectedActions = [
         {
           type: updateEntity.pending.type,
@@ -256,7 +248,7 @@ describe('Entities reducer tests', () => {
       expect(store.getActions()[2]).toMatchObject(expectedActions[2]);
     });
 
-    it('dispatches PARTIAL_UPDATE_JSUBSCRIPTION actions', async () => {
+    it('dispatches PARTIAL_UPDATE_PRICING actions', async () => {
       const expectedActions = [
         {
           type: partialUpdateEntity.pending.type,
@@ -275,7 +267,7 @@ describe('Entities reducer tests', () => {
       expect(store.getActions()[2]).toMatchObject(expectedActions[2]);
     });
 
-    it('dispatches DELETE_JSUBSCRIPTION actions', async () => {
+    it('dispatches DELETE_PRICING actions', async () => {
       const expectedActions = [
         {
           type: deleteEntity.pending.type,

@@ -1,7 +1,16 @@
-entity JSubscription {
+entity UserSubscription {
     userId Long,
 	startDate Instant,
 	endDate Instant,
+    pricingId Long
+}
+
+entity Pricing {
+    title String,
+    desc String,
+    price Double,
+    updatedAt Instant,
+    isDeleted Boolean
 }
 
 service * with serviceClass

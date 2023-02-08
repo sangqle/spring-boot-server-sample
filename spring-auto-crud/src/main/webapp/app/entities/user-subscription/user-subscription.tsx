@@ -9,10 +9,10 @@ import { ASC, DESC, ITEMS_PER_PAGE, SORT } from 'app/shared/util/pagination.cons
 import { overridePaginationStateWithQueryParams } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
-import { IJSubscription } from 'app/shared/model/j-subscription.model';
-import { getEntities } from './j-subscription.reducer';
+import { IUserSubscription } from 'app/shared/model/user-subscription.model';
+import { getEntities } from './user-subscription.reducer';
 
-export const JSubscription = () => {
+export const UserSubscription = () => {
   const dispatch = useAppDispatch();
 
   const location = useLocation();
@@ -83,15 +83,15 @@ export const JSubscription = () => {
 
   return (
     <div>
-      <h2 id="j-subscription-heading" data-cy="JSubscriptionHeading">
-        J Subscriptions
+      <h2 id="user-subscription-heading" data-cy="UserSubscriptionHeading">
+        User Subscriptions
         <div className="d-flex justify-content-end">
           <Button className="me-2" color="info" onClick={handleSyncList} disabled={loading}>
             <FontAwesomeIcon icon="sync" spin={loading} /> Refresh list
           </Button>
-          <Link to="/j-subscription/new" className="btn btn-primary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
+          <Link to="/user-subscription/new" className="btn btn-primary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
             <FontAwesomeIcon icon="plus" />
-            &nbsp; Create a new J Subscription
+            &nbsp; Create a new User Subscription
           </Link>
         </div>
       </h2>
@@ -112,6 +112,9 @@ export const JSubscription = () => {
                 <th className="hand" onClick={sort('endDate')}>
                   End Date <FontAwesomeIcon icon="sort" />
                 </th>
+                <th className="hand" onClick={sort('pricingId')}>
+                  Pricing Id <FontAwesomeIcon icon="sort" />
+                </th>
                 <th />
               </tr>
             </thead>
@@ -119,25 +122,34 @@ export const JSubscription = () => {
               {userSubscriptionList.map((userSubscription, i) => (
                 <tr key={`entity-${i}`} data-cy="entityTable">
                   <td>
-                    <Button tag={Link} to={`/j-subscription/${userSubscription.id}`} color="link" size="sm">
+                    <Button tag={Link} to={`/user-subscription/${userSubscription.id}`} color="link" size="sm">
                       {userSubscription.id}
                     </Button>
                   </td>
                   <td>{userSubscription.userId}</td>
                   <td>
-                    {userSubscription.startDate ? <TextFormat type="date" value={userSubscription.startDate} format={APP_DATE_FORMAT} /> : null}
+                    {userSubscription.startDate ? (
+                      <TextFormat type="date" value={userSubscription.startDate} format={APP_DATE_FORMAT} />
+                    ) : null}
                   </td>
                   <td>
                     {userSubscription.endDate ? <TextFormat type="date" value={userSubscription.endDate} format={APP_DATE_FORMAT} /> : null}
                   </td>
+                  <td>{userSubscription.pricingId}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
-                      <Button tag={Link} to={`/j-subscription/${userSubscription.id}`} color="info" size="sm" data-cy="entityDetailsButton">
+                      <Button
+                        tag={Link}
+                        to={`/user-subscription/${userSubscription.id}`}
+                        color="info"
+                        size="sm"
+                        data-cy="entityDetailsButton"
+                      >
                         <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">View</span>
                       </Button>
                       <Button
                         tag={Link}
-                        to={`/j-subscription/${userSubscription.id}/edit?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
+                        to={`/user-subscription/${userSubscription.id}/edit?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
                         color="primary"
                         size="sm"
                         data-cy="entityEditButton"
@@ -146,7 +158,7 @@ export const JSubscription = () => {
                       </Button>
                       <Button
                         tag={Link}
-                        to={`/j-subscription/${userSubscription.id}/delete?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
+                        to={`/user-subscription/${userSubscription.id}/delete?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
                         color="danger"
                         size="sm"
                         data-cy="entityDeleteButton"
@@ -160,7 +172,7 @@ export const JSubscription = () => {
             </tbody>
           </Table>
         ) : (
-          !loading && <div className="alert alert-warning">No J Subscriptions found</div>
+          !loading && <div className="alert alert-warning">No User Subscriptions found</div>
         )}
       </div>
       {totalItems ? (
@@ -185,4 +197,4 @@ export const JSubscription = () => {
   );
 };
 
-export default JSubscription;
+export default UserSubscription;
